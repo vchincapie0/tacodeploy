@@ -18,4 +18,7 @@ urlpatterns = [
     path('delete_user/<pk>',admin_required(views.UserDeleteView.as_view()),name='delete_user'),
     path('logout/',views.LogOut.as_view(),name='logout'),
     path('user_audit/',admin_required(views.UserAuditListView.as_view()),name='user_audit'),
+    path('register_user',views.UserRegisterViewLogin.as_view(),name='add_user2'),
+    
+    
 ]

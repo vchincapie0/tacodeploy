@@ -267,3 +267,32 @@ def export_users_to_csv(request):
         writer.writerow([usuario.username, usuario.username, usuario.name, usuario.last_name, rol])
 
     return response
+
+class UserRegisterViewLogin(FormView):
+    '''Vista que registra usuarios del modelo user'''
+    template_name ='usuarios/add_user2.html'
+    form_class=UserRegisterForm
+    success_url=reverse_lazy('users_app:login')
+
+    def form_valid(self, form):
+        '''Función para guardar los datos del usuario'''
+        # Obtener los datos del formulario
+        username = form.cleaned_data['username']
+        name = form.cleaned_data['name']
+        last_name = form.cleaned_data['last_name']
+        password = form.cleaned_data['password']
+        is_admin = form.cleaned_data['is_admin']
+
+        # Crear el usuario en la base de datos
+        User.objects.create_user(
+            username=username,
+            name=name,
+            last_name=last_name,
+            password=password,
+            is_admin=is_admin,
+        )
+
+        # Agregar un mensaje de éxito con el nombre de usuario
+        messages.success(self.request, f'¡El usuario {username} se ha agregado correctamente!')
+
+        return super(UserRegisterViewLogin, self).form_valid(form)
