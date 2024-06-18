@@ -129,6 +129,7 @@ SESSION_COOKIE_AGE = 1800  # Tiempo de sesión en segundos (ejemplo: 30 minutos)
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[BASE_DIR / "static",]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # This production code might break development mode, so we check whether we're in DEBUG mode
 if not DEBUG:
