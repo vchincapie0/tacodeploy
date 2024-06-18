@@ -1,0 +1,22 @@
+databases:
+  - name: tacosoft
+    plan: free
+    databaseName: tacosoft_v46g
+    user: tacosoft
+
+services:
+  - type: web
+    plan: free
+    name: sistema
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn sistema.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tacosoft
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
